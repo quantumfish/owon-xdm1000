@@ -48,8 +48,6 @@ MODE_RATE_DELAY = 0.5
 
 class XDM1000Error(Exception):
     """Base exception type for the XDM1000 driver."""
-    ...
-
 
 # =============================================================
 #   MEASUREMENT MODES AND SPEED
