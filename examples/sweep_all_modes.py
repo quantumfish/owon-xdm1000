@@ -19,6 +19,7 @@ from xdm1000 import (
 
 
 def main():
+    """Sweep all modes and speeds, printing measurement values."""
     print("Searching for first OWON XDM1xxx instrument...\n")
 
     try:

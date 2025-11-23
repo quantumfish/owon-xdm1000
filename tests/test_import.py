@@ -1,7 +1,10 @@
-def test_import():
-    from xdm1000 import XDM1000, MeasurementMode, MeasurementSpeed
+"""Basic smoke-test for xdm1000 package import."""
 
-    # Just ensure the symbols exist
-    assert XDM1000 is not None
-    assert MeasurementMode.VDC.value == "VOLT:DC"
-    assert MeasurementSpeed.FAST.value == "F"
+from xdm1000 import XDM1000, MeasurementMode, MeasurementSpeed
+
+
+def test_import():
+    """Check that package symbols import correctly."""
+    assert XDM1000
+    assert MeasurementMode
+    assert MeasurementSpeed

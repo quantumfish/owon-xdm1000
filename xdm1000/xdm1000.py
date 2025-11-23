@@ -36,8 +36,8 @@ import time
 from enum import Enum
 from typing import Optional, Union
 
-import serial
-from serial.tools import list_ports
+import serial  # type: ignore[import-error]  # pylint: disable=import-error
+from serial.tools import list_ports  # type: ignore[import-error]  # pylint: disable=import-error
 
 DEFAULT_BAUDRATE = 115200
 DEFAULT_TIMEOUT = 0.5
@@ -48,7 +48,7 @@ MODE_RATE_DELAY = 0.5
 
 class XDM1000Error(Exception):
     """Base exception type for the XDM1000 driver."""
-    pass
+    ...
 
 
 # =============================================================
@@ -158,8 +158,10 @@ def _normalize_scpi(value, enum_type):
 
     try:
         return table[s]
-    except KeyError:
-        raise XDM1000Error(f"Unknown {enum_type.__name__} token: {value!r}")
+    except KeyError as exc:  # pylint: disable=raise-missing-from
+        raise XDM1000Error(
+            f"Unknown {enum_type.__name__} token: {value!r}"
+        ) from exc
 
 
 # =============================================================
@@ -194,6 +196,7 @@ class XDM1000:
     ...     print("V =", meter.measure())
     ...     time.sleep(1)
     """
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(
         self,
@@ -271,7 +274,7 @@ class XDM1000:
                     chosen_port = p.device
                     chosen_idn = idn
                     break
-            except Exception:
+            except Exception:  # pylint: disable=broad-exception-caught
                 # Any error on this port: skip to the next one
                 continue
 
@@ -305,21 +308,13 @@ class XDM1000:
     # -------- Context manager protocol --------
 
     def __enter__(self) -> "XDM1000":
-        """
-        Enter the runtime context related to this object.
-
-        Returns
-        -------
-        XDM1000
-            The instance itself, for use as `with XDM1000(...) as meter:`.
-        """
+        """Enter the runtime context related to this object."""
         return self
 
     def __exit__(self, exc_type, exc, tb):
         """
         Exit the runtime context and close the serial port.
 
-        This is called automatically at the end of a `with` block.
         Any exception raised inside the block is propagated (no suppression).
         """
         self.close()
@@ -402,7 +397,8 @@ class XDM1000:
         for _ in range(2):
             try:
                 _ = self.query("MEAS?")
-            except Exception:
+            except Exception:  # pylint: disable=broad-exception-caught
+                # warm-up failures are ignored
                 pass
             time.sleep(0.1)
 
@@ -451,7 +447,7 @@ class XDM1000:
         try:
             float(s)
             return True
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             return False
 
     def measure(self) -> float:
