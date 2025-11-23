@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xdm1000"
+version = "0.1.0"
+description = "Simple Python driver for OWON XDM1000 / XDM1xxx multimeters over serial (SCPI)."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name = "Andrei Minaev", email = "andrei.minaev@gmail.com" }
+]
+keywords = ["owon", "xdm1000", "multimeter", "scpi", "instrumentation"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering",
+]
+
+dependencies = [
+  "pyserial>=3.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/quantumfish/xdm1000"
+Source = "https://github.com/quantumfish/xdm1000"
+Issues = "https://github.com/quantumfish/xdm1000/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["xdm1000"]
