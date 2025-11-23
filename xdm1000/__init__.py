@@ -1,6 +1,4 @@
-"""
-Public API for the xdm1000 package.
-"""
+"""Public API for the xdm1000 package."""
 
 from .xdm1000 import (
     XDM1000,
@@ -15,3 +13,5 @@ __all__ = [
     "MeasurementMode",
     "MeasurementSpeed",
 ]
+
+__version__ = "0.1.0"
